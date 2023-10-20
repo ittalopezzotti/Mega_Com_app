@@ -13,7 +13,7 @@
 **Address File   :D:\0_0_2_Repository_GIT_SourceTree\Mega_Com_app******************************************************************
 **File analisis:D:\0_0_2_Repository_GIT_SourceTree\Hasnecood\1_Bluetooth_Mega_Hasnecod_28092023\1_Bluetooth_Mega_Hasnecod_28092023*
 **Name file github:::  E:\1_0_3_Firmware_Publicaciones\Mega_Com_App****************************************************************
-**Version:    Version II***********************************************************************************************************
+**Version:    Version III *********************************************************************************************************
 *********OBJECTIVE OF THE PROGRAM:::: TRANSMISSION OF SENSOR DATA IN DIFFERENT MODALITIES******************************************
 *********MODALITIES: CELL PHONE, TABLET, SERVER, COMPUTER**************************************************************************
 **********************************************************************************************************************************/
@@ -34,65 +34,38 @@
   =====================================
   ||||||||||||||||||||||||||||||||||||||
   =====================================*/
-
-//Include the SoftwareSerial library
-#include "SoftwareSerial.h"
-
-//Create a new software  serial
-SoftwareSerial bluetooth1(2, 3); // TX, RX (Bluetooth)
-SoftwareSerial bluetooth2(4, 5); // TX, RX (Bluetooth)
-//SoftwareSerial bluetooth2(1, 0); // TX, RX (Bluetooth)
-  
-const int ledPin = 13; // the pin that the LED is attached to
-const int ledPin2 = 12; // the pin that the LED is attached to
-int incomingByte;      // a variable to read incoming serial data into
-int incomingByte2;      // a variable to read incoming serial data into
 void setup() {
-  //Initialize the software serial
-  Serial.begin(9600);
-  bluetooth1.begin(9600);
-  
-  bluetooth2.begin(9600);
- // bluetooth.begin(9600);
-  
-  // initialize the LED pin as an output:
-  pinMode(ledPin, OUTPUT);
+  // put your setup code here, to run once:
+  //Serial.begin(9600); //Tx0 and Rx0  //Set Baud Rate to 9600 for Serial Communication Tx0 and Rx0
+  Serial3.begin(9600);  //Tx1 and Rx1  //Connected to Bluetooth Module HC-05 (Bluetooth 2.0)
+  //Serial2;  //Tx2 and Rx2
+  //Serial3;  //Tx3 and Rx3
+
+  pinMode(9, OUTPUT);  //Set Pin 13 as Output (Connected to LED)
+ 
+//  Serial.println("press \"a\" or \"A\" to switch ON the LED");  //To Desktop
+//  Serial.println("press \"b\" or \"B\" to switch OFF the LED");
+  Serial3.println("press \"a\" or \"A\" to switch ON BLUE  the LED"); //To mobile
+  Serial3.println("press \"b\" or \"B\" to switch OFF BLUE the LED");
 }
 
-
-
 void loop() {
-  // see if there's incoming serial data:
-  if ((bluetooth1.available() > 0) || (bluetooth2.available()) > 0)
+  // put your main code here, to run repeatedly:
+  
+  if(Serial3.available()>0)
   {
-    // read the serial buffer:
-    incomingByte = bluetooth1.read();
-    // if  N turn on the LED:
-    if (incomingByte == 'N') {
-      digitalWrite(ledPin, HIGH);
-      bluetooth1.println("LED: ON");
+    int buffer_value = Serial3.read();
+    if(buffer_value == 'a' || buffer_value == 'A')
+    {   digitalWrite(9, HIGH);    //Turn ON LED
+//      Serial.println("LED BLU ON");  //Arduino Terminal of Desktop 
+      Serial3.println("LED BLU ON"); //Bluetooth Terminal on Mobile
     }
-    // if  N turn OFF the LED:
-    if (incomingByte == 'M') {
-      digitalWrite(ledPin, LOW);
-      bluetooth1.println("LED: OFF");
-    }
-  }
-
-  // incoming serial data:
- // else if (bluetooth2.available() > 0) {
-    // read the serial buffer:
-    incomingByte2 = bluetooth2.read();
-   // if  N turn on the LED:
-    if (incomingByte2 == 'G') {
-      digitalWrite(ledPin2, HIGH);
-      bluetooth2.println("LED: ON");
-    }
-   // if  N turn OFF the LED:
-    if (incomingByte2 == 'W') {
-      digitalWrite(ledPin2, LOW);
-      bluetooth2.println("LED: OFF");
+    else if(buffer_value == 'b' || buffer_value == 'B')
+    {
+        digitalWrite(9, LOW);    //Turn ON LED
+//      Serial.println("LED OFF");  //Arduino Terminal on Desktop
+      Serial3.println("LED BLU OFF"); //Bluetooth Terminal on Mobile 
     }
   }
-
+}
  
