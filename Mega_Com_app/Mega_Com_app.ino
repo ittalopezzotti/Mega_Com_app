@@ -36,20 +36,22 @@
   =====================================*/
 void setup() {
 
-  Serial1.begin(9600);  //Tx1 and Rx1  //Connected to Bluetooth Module HC-05 (Bluetooth 2.0)
-  Serial.setTimeout(3000); //Set el Timeout en 3 segundos para Serial.find()
- Serial.println("AT\r"); //PROBAR CON \n\r
-  
- delay(2000);
-  
-
-  pinMode(13, OUTPUT);  //Set Pin 13 as Output (Connected to LED)
-  pinMode(9, OUTPUT);  //Set Pin 13 as Output (Connected to LED)
-  pinMode(8, OUTPUT);  //Set Pin 13 as Output (Connected to LED)
-
+  /*|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| 
+   ****I PREPARE THE COMMUNICATIONS PORT WITH SERIAL 1 CELLULAR BLUETOOTH****
+   ***PTO 19 (RXD) 18 (TXD) ARDUINO MEGA************************************************* 
+  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+  Serial1.begin(9600);  //Tx1 and Rx1  /Connected to Bluetooth Module HC-05 (Bluetooth 2.0)
   Serial1.println("press \"a\" or \"A\" to switch ON the LED"); //To mobile
-  Serial1.println("press \"b\" or \"B\" to switch OFF the LED");
-    delay(500);
+  delay(100);
+     /*|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| 
+   ****READING DATA PC PREPARED THE COMMUNICATIONS PORT WITH SERIAL****
+   ***PTO 0 (RXD) 1 (TXD) ARDUINO MEGA************************************************* 
+  |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+  Serial.begin(9600);  //Tx and Rx  pc mode
+  delay(100);
+  Serial.println("AT\r"); //access \n\r
+  pinMode(10, OUTPUT);  //Set Pin 10 as Output (Connected to LED)
+  delay(500);
   Serial.flush();       // Clear receive buffer.
 }
 
